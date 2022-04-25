@@ -8,9 +8,13 @@ public class PlayerMovement : MonoBehaviour
     float speed = 5.0f;
     float horizontalMovement = 0.0f;
     // muuttuja hyppyvoimalle
-    public float jumpForce = 4.0f;
+    float jumpForce = 7.0f;
     // muuttuja Rigidbodylle, jota liikutetaan
     public Rigidbody2D myRigidbody;
+    // muuttuja maata varten
+    public LayerMask Ground;
+    // muuttuja jalkoja varten
+    public CircleCollider2D Feet;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +26,16 @@ public class PlayerMovement : MonoBehaviour
     {
         // haetaan näppäimistöltä tieto halutusta sivuttaisliikkeestä
         horizontalMovement = Input.GetAxis("Horizontal");
-        if (Input.GetButtonDown("Jump"))
+        // käännetään pelaaja menosuuntaan
+        if (horizontalMovement < 0)
+        {
+            transform.localScale = new Vector2(-1, 1);
+        }
+        if (horizontalMovement > 0)
+        {
+            transform.localScale = new Vector2(1, 1);
+        }
+        if (Input.GetButtonDown("Jump") && Feet.IsTouchingLayers(Ground))
         {
             // tehdään vektori, joka annetaan hyppykäskyllä pelihahmolle
             Vector2 jumpVector = new Vector2(0, jumpForce);
