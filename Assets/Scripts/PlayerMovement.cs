@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask Ground;
     // muuttuja jalkoja varten
     public CircleCollider2D Feet;
+    // animaattori animaatioita varten
+    public Animator myAnimator;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // haetaan näppäimistöltä tieto halutusta sivuttaisliikkeestä
         horizontalMovement = Input.GetAxis("Horizontal");
+        // kerrotaan tämän itseisarvo animaattorille
+        myAnimator.SetFloat("Speed", Mathf.Abs(horizontalMovement));
         // käännetään pelaaja menosuuntaan
         if (horizontalMovement < 0)
         {
